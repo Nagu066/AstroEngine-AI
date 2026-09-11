@@ -1,0 +1,78 @@
+{
+  "intents": {
+    "career": {
+      "name": "Career",
+      "description": "Questions regarding job changes, career growth, profession, promotions, business, workplace",
+      "primary_sources": ["10th House", "Career Horoscope"],
+      "secondary_sources": ["Current Dasha", "Panchang"],
+      "exclude_sources": ["Relationship Horoscope", "Finance Horoscope"],
+      "houses_to_include": ["10"],
+      "include_dasha": true,
+      "include_panchang": true,
+      "horoscope_keys": ["career"]
+    },
+    "relationship": {
+      "name": "Relationship",
+      "description": "Questions regarding love, marriage, partnership, family, relationships",
+      "primary_sources": ["7th House", "Relationship Horoscope"],
+      "secondary_sources": ["Moon Sign", "Current Dasha"],
+      "exclude_sources": ["Career Horoscope", "Finance Horoscope"],
+      "houses_to_include": ["7"],
+      "include_dasha": true,
+      "include_panchang": false,
+      "horoscope_keys": ["relationship"]
+    },
+    "health": {
+      "name": "Health",
+      "description": "Questions regarding health, wellness, vitality, illness, stress, focus",
+      "primary_sources": ["6th House", "Health Horoscope"],
+      "secondary_sources": ["Moon Sign", "Panchang"],
+      "exclude_sources": ["Finance Horoscope", "Career Horoscope"],
+      "houses_to_include": ["6"],
+      "include_dasha": true,
+      "include_panchang": true,
+      "horoscope_keys": ["health"]
+    },
+    "finance": {
+      "name": "Finance",
+      "description": "Questions regarding investments, money, wealth, debt, financial decisions",
+      "primary_sources": ["Finance Horoscope", "Current Dasha"],
+      "secondary_sources": ["6th House", "Panchang"],
+      "exclude_sources": ["Relationship Horoscope"],
+      "houses_to_include": ["6"],
+      "include_dasha": true,
+      "include_panchang": true,
+      "horoscope_keys": ["finance"]
+    },
+    "general": {
+      "name": "General",
+      "description": "General life questions, summaries, weekly or daily overviews",
+      "primary_sources": ["Career Horoscope", "Relationship Horoscope", "Health Horoscope", "Finance Horoscope", "Current Dasha", "Panchang"],
+      "secondary_sources": ["Lagna", "Moon Sign", "6th House", "7th House", "10th House"],
+      "exclude_sources": [],
+      "houses_to_include": ["6", "7", "10"],
+      "include_dasha": true,
+      "include_panchang": true,
+      "horoscope_keys": ["career", "finance", "health", "relationship"]
+    }
+  },
+  "subscription_tier_words": {
+    "free": 150,
+    "standard": 200,
+    "premium": 300,
+    "vip": 400
+  },
+  "tone_descriptions": {
+    "motivational": "Inspiring, uplifting, empowering, focusing on opportunities and personal growth.",
+    "direct": "Clear, concise, straightforward, pragmatic without unnecessary fluff.",
+    "compassionate": "Warm, empathetic, reassuring, gentle and supportive.",
+    "analytical": "Detailed, logic-driven, structured, giving clear astrological reasoning."
+  },
+  "language_names": {
+    "en": "English",
+    "hi": "Hindi",
+    "es": "Spanish",
+    "fr": "French",
+    "de": "German"
+  }
+}

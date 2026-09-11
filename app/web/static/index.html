@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AstroEngine AI - Personalization & Context Orchestrator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0f172a;
+      --card-bg: #1e293b;
+      --border-color: #334155;
+      --accent-gold: #f59e0b;
+      --accent-purple: #8b5cf6;
+      --accent-blue: #3b82f6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1e1b4b, #312e81);
+      padding: 1.5rem 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+    header .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #f59e0b, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header p { font-size: 0.875rem; color: var(--text-muted); }
+
+    main {
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 900px) {
+      main { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #e2e8f0;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 0.375rem;
+    }
+    select, input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      background: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    textarea { height: 90px; resize: vertical; }
+
+    .sample-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .chip {
+      background: #334155;
+      color: #cbd5e1;
+      border: none;
+      padding: 0.35rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .chip:hover {
+      background: var(--accent-purple);
+      color: #fff;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .btn {
+      flex: 1;
+      padding: 0.85rem;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.9; }
+    .btn-primary { background: linear-gradient(135deg, #f59e0b, #d97706); color: #000; }
+    .btn-secondary { background: #3b82f6; color: #fff; }
+
+    .tag {
+      display: inline-block;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-right: 0.4rem;
+      margin-bottom: 0.4rem;
+    }
+    .tag-selected { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #059669; }
+    .tag-excluded { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #dc2626; }
+    .tag-intent { background: rgba(139, 92, 246, 0.2); color: #c084fc; border: 1px solid #7c3aed; }
+
+    .result-section {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .metric-box {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0.75rem;
+      background: #1e293b;
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    pre {
+      background: #020617;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      color: #38bdf8;
+    }
+
+    .loader {
+      display: none;
+      text-align: center;
+      padding: 2rem;
+      color: var(--accent-gold);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div>
+        <h1>AstroEngine AI Studio</h1>
+        <p>Enterprise GenAI Personalization & Context Orchestrator</p>
+      </div>
+      <div>
+        <a href="/docs" target="_blank" style="color: var(--accent-gold); text-decoration: none; font-weight: 600; font-size: 0.9rem;">OpenAPI Specs &rarr;</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Left Column: Test Form -->
+    <div class="card">
+      <h2>🔮 GenAI Context Playground</h2>
+      
+      <div class="form-group">
+        <label>Select User Profile</label>
+        <select id="userSelect">
+          <option value="user_101">user_101 - Aarav Sharma (English, Premium, Motivational)</option>
+          <option value="user_102">user_102 - Priya Patel (Hindi, Free, Compassionate)</option>
+          <option value="user_103">user_103 - Rohan Verma (English, Standard, Direct)</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>User Question</label>
+        <textarea id="questionInput">Should I consider changing my job in the next few months?</textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Quick Sample Questions</label>
+        <div class="sample-btn-group">
+          <button class="chip" onclick="setQuestion('Should I consider changing my job this year?')">💼 Career Switch</button>
+          <button class="chip" onclick="setQuestion('How does this month look for my relationship?')">❤️ Relationship</button>
+          <button class="chip" onclick="setQuestion('What should I focus on for my health?')">🧘 Health & Energy</button>
+          <button class="chip" onclick="setQuestion('Should I invest in stocks or property?')">💰 Financial Growth</button>
+          <button class="chip" onclick="setQuestion('Can you summarize today\'s overall guidance?')">✨ Daily Guidance</button>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="btn btn-secondary" onclick="executeDebug()">Run Context Debugger</button>
+        <button class="btn btn-primary" onclick="executePersonalize()">Generate AI Completion</button>
+      </div>
+    </div>
+
+    <!-- Right Column: Results -->
+    <div class="card">
+      <h2>📊 Orchestration & Prompt Intelligence</h2>
+      <div id="loader" class="loader">⚡ Orchestrating Context Engine...</div>
+      
+      <div id="resultsContent">
+        <div style="color: var(--text-muted); font-size: 0.9rem; text-align: center; padding: 3rem 0;">
+          Select a question and click <strong>Generate AI Completion</strong> or <strong>Run Context Debugger</strong> to view real-time context filtering and LLM generation.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function setQuestion(text) {
+      document.getElementById('questionInput').value = text;
+    }
+
+    async function executeDebug() {
+      const userId = document.getElementById('userSelect').value;
+      const question = document.getElementById('questionInput').value;
+      showLoader(true);
+
+      try {
+        const res = await fetch('/debug/personalization', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ userId, question })
+        });
+        const data = await res.json();
+        renderDebugResult(data);
+      } catch (err) {
+        renderError(err.message);
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    async function executePersonalize() {
+      const userId = document.getElementById('userSelect').value;
+      const question = document.getElementById('questionInput').value;
+      showLoader(true);
+
+      try {
+        const res = await fetch('/personalize', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ userId, question })
+        });
+        const data = await res.json();
+        renderPersonalizeResult(data);
+      } catch (err) {
+        renderError(err.message);
+      } finally {
+        showLoader(false);
+      }
+    }
+
+    function showLoader(show) {
+      document.getElementById('loader').style.display = show ? 'block' : 'none';
+      document.getElementById('resultsContent').style.display = show ? 'none' : 'block';
+    }
+
+    function renderDebugResult(data) {
+      const html = `
+        <div class="result-section">
+          <div style="margin-bottom: 0.75rem;">
+            <strong>Detected Intent:</strong> <span class="tag tag-intent">${data.intent.toUpperCase()}</span>
+            <span class="tag" style="background:#334155; color:#fff;">Lang: ${data.language}</span>
+            <span class="tag" style="background:#334155; color:#fff;">Tone: ${data.tone}</span>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <label>Selected Context (Sent to LLM):</label>
+            <div>${data.selectedContext.map(s => `<span class="tag tag-selected">✓ ${s}</span>`).join('')}</div>
+          </div>
+
+          <div style="margin-top: 0.75rem;">
+            <label>Excluded Context (Filtered Out):</label>
+            <div>${data.excludedContext.length ? data.excludedContext.map(s => `<span class="tag tag-excluded">✗ ${s}</span>`).join('') : '<span style="color:var(--text-muted); font-size:0.8rem;">None</span>'}</div>
+          </div>
+
+          <div class="metric-box" style="margin-top: 1rem;">
+            <span>Prompt Size: <strong>${data.promptMetrics.character_count} chars</strong></span>
+            <span>Est. Tokens: <strong>~${data.promptMetrics.estimated_token_count} tokens</strong></span>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <label>Full Debug JSON Payload:</label>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          </div>
+        </div>
+      `;
+      document.getElementById('resultsContent').innerHTML = html;
+    }
+
+    function renderPersonalizeResult(data) {
+      const html = `
+        <div class="result-section">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+            <div><strong>Confidence:</strong> <span class="tag" style="background:${data.confidence === 'HIGH' ? '#10b981' : '#f59e0b'}; color:#000;">${data.confidence}</span></div>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <label>Generated Answer:</label>
+            <div style="background: #1e293b; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent-gold); font-size: 0.95rem;">
+              ${data.answer}
+            </div>
+          </div>
+
+          <div>
+            <label>Sources Used:</label>
+            <div>${data.sourcesUsed.map(s => `<span class="tag tag-selected">✓ ${s}</span>`).join('')}</div>
+          </div>
+        </div>
+      `;
+      document.getElementById('resultsContent').innerHTML = html;
+    }
+
+    function renderError(msg) {
+      document.getElementById('resultsContent').innerHTML = `<div class="result-section" style="color: var(--danger);">Error: ${msg}</div>`;
+    }
+  </script>
+</body>
+</html>

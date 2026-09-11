@@ -1,0 +1,36 @@
+```mermaid
+graph TD
+    Client[Client App / Mobile] -->|POST /personalize| API[FastAPI Application]
+    Client -->|POST /debug/personalization| API
+
+    subgraph API Layer
+        API --> Mw[Middleware: Latency, Prompt Size & Logging]
+        Mw --> Router[API Routers]
+    end
+
+    subgraph Upstream Microservice Layer
+        Router -->|Async Gather| UpstreamMgr[Upstream Client Manager]
+        UpstreamMgr -->|Check TTL| Cache[(In-Memory TTL Cache)]
+        UpstreamMgr -->|GET /users/id| UserSvc[User Microservice]
+        UpstreamMgr -->|GET /kundli/id| KundliSvc[Kundli Microservice]
+        UpstreamMgr -->|GET /horoscope/id| HoroSvc[Horoscope Microservice]
+        UpstreamMgr -->|GET /panchang| PanchSvc[Panchang Microservice]
+    end
+
+    subgraph Intelligence Engine Layer
+        Router --> Engine[Personalization Engine Orchestrator]
+        Engine --> Intent[Intent Detection Engine]
+        Engine --> ConfigEngine[Config-Driven Context Selector]
+        ConfigEngine -->|Load Mapping Rules| Rules[personalization_rules.json]
+        Engine --> PromptBuilder[Prompt Builder]
+    end
+
+    subgraph LLM Provider Abstraction
+        Engine --> LLMFactory[LLM Provider Factory]
+        LLMFactory -->|Default Offline| MockLLM[Mock LLM Provider]
+        LLMFactory -->|Optional API Key| GeminiLLM[Google Gemini Provider]
+        LLMFactory -->|Optional API Key| OpenAILLM[OpenAI GPT Provider]
+    end
+
+    LLMFactory -->|Grounded Response| Client
+```

@@ -1,0 +1,29 @@
+# Python & Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# Pytest & Cache
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE & OS Files
+.DS_Store
+.vscode/
+.idea/
+
+# Environment Variables
+.env
+.env.local
+
+# Temporary files
+codebase_context_for_llm.txt
+*.zip
+*.log
